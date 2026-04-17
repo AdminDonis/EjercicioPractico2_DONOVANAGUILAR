@@ -3,14 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.ejerciciopractico2.eventos.controller;
+
 import com.ejerciciopractico2.eventos.domain.Usuario;
+import com.ejerciciopractico2.eventos.service.RolService;
 import com.ejerciciopractico2.eventos.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 @Controller
 @RequestMapping("/usuario")
 /**
@@ -18,8 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Donovan
  */
 public class UsuarioController {
-   @Autowired
+
+    @Autowired
     private UsuarioService usuarioService;
+    
+    @Autowired
+    private RolService rolService;  // 👈 Necesario para el select de roles
 
     @GetMapping("/listado")
     public String listado(Model model) {
@@ -29,7 +34,9 @@ public class UsuarioController {
     }
 
     @GetMapping("/nuevo")
-    public String nuevo(Usuario usuario) {
+    public String nuevo(Usuario usuario, Model model) {
+        var roles = rolService.getRoles();
+        model.addAttribute("roles", roles);
         return "usuario/modifica";
     }
 
@@ -39,16 +46,18 @@ public class UsuarioController {
         return "redirect:/usuario/listado";
     }
 
-@GetMapping("/eliminar/{id}")
-public String eliminar(Usuario usuario) {
-    usuarioService.delete(usuario);
-    return "redirect:/usuario/listado";
-}
+    @GetMapping("/eliminar/{id}")
+    public String eliminar(Usuario usuario) {
+        usuarioService.delete(usuario);
+        return "redirect:/usuario/listado";
+    }
 
-@GetMapping("/modificar/{id}")
-public String modificar(Usuario usuario, Model model) {
-    usuario = usuarioService.getUsuario(usuario);
-    model.addAttribute("usuario", usuario);
-    return "usuario/modifica";
-}
+    @GetMapping("/modificar/{id}")
+    public String modificar(Usuario usuario, Model model) {
+        usuario = usuarioService.getUsuario(usuario);
+        model.addAttribute("usuario", usuario);
+        var roles = rolService.getRoles();
+        model.addAttribute("roles", roles);
+        return "usuario/modifica";
+    }
 }

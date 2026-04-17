@@ -5,36 +5,29 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 -->
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Formulario Rol</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
 <body>
-
-<nav class="navbar navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">Eventos</a>
-    </div>
-</nav>
-
-<div class="container mt-4">
-
-    <h2>Formulario Rol</h2>
-
-    <form th:action="@{/rol/guardar}" method="post" th:object="${rol}" class="card p-4 shadow">
-
-        <input type="hidden" th:field="*{id}"/>
-
-        <div class="mb-3">
-            <label>Nombre:</label>
-            <input type="text" th:field="*{nombre}" class="form-control"/>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Eventos</a>
         </div>
+    </nav>
 
-        <button class="btn btn-success">Guardar</button>
-
-    </form>
-
-</div>
-
+    <div class="container mt-4">
+        <h2>Formulario de Rol</h2>
+        <form th:action="@{/rol/guardar}" method="post" th:object="${rol}" class="card p-4 shadow">
+            <input type="hidden" th:field="*{id}"/>
+            
+            <div class="mb-3">
+                <label>Nombre:</label>
+                <input type="text" th:field="*{nombre}" class="form-control" required/>
+            </div>
+            
+            <button class="btn btn-success">Guardar</button>
+        </form>
+    </div>
 </body>
 </html>

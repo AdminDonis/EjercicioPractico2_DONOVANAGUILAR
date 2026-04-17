@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.ejerciciopractico2.eventos.controller;
+
 import com.ejerciciopractico2.eventos.domain.Rol;
 import com.ejerciciopractico2.eventos.service.RolService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/rol")
-/**
- *
- * @author Donovan
- */
 public class RolController {
-  @Autowired
+
+    @Autowired
     private RolService rolService;
 
     @GetMapping("/listado")
