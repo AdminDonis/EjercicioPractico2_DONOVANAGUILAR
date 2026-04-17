@@ -3,38 +3,63 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Formulario Rol</title>
+    <meta charset="UTF-8">
+    <title>Listado de Eventos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
 <body>
-
-<nav class="navbar navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">Eventos</a>
-    </div>
-</nav>
-
-<div class="container mt-4">
-
-    <h2>Formulario Rol</h2>
-
-    <form th:action="@{/rol/guardar}" method="post" th:object="${rol}" class="card p-4 shadow">
-
-        <input type="hidden" th:field="*{id}"/>
-
-        <div class="mb-3">
-            <label>Nombre:</label>
-            <input type="text" th:field="*{nombre}" class="form-control"/>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Eventos</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/evento/listado}">Eventos</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/usuario/listado}">Usuarios</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/rol/listado}">Roles</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/evento/consulta}">Consultas</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger" th:href="@{/logout}">Salir</a></li>
+                </ul>
+            </div>
         </div>
+    </nav>
 
-        <button class="btn btn-success">Guardar</button>
-
-    </form>
-
-</div>
-
+    <div class="container mt-4">
+        <h2>Listado de Eventos</h2>
+        <a class="btn btn-primary mb-3" th:href="@{/evento/nuevo}">+ Nuevo Evento</a>
+        
+        <table class="table table-striped table-hover shadow">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Fecha</th>
+                    <th>Capacidad</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="evento : ${eventos}">
+                    <td th:text="${evento.id}"></td>
+                    <td th:text="${evento.nombre}"></td>
+                    <td th:text="${evento.descripcion}"></td>
+                    <td th:text="${evento.fecha}"></td>
+                    <td th:text="${evento.capacidad}"></td>
+                    <td>
+                        <span th:if="${evento.activo}" class="badge bg-success">Activo</span>
+                        <span th:unless="${evento.activo}" class="badge bg-danger">Inactivo</span>
+                    </td>
+                    <td>
+                        <a class="btn btn-warning btn-sm" th:href="@{'/evento/modificar/' + ${evento.id}}">Editar</a>
+                        <a class="btn btn-danger btn-sm" th:href="@{'/evento/eliminar/' + ${evento.id}}">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
